@@ -190,7 +190,7 @@ function fncGetList(currentPage) {
 			<td></td>
 			<td align="left">
 		
-			배송중
+			수정해야돼~~~
 		
 			</td>	
 		</tr>

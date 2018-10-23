@@ -11,7 +11,7 @@ import com.model2.mvc.service.product.dao.ProductDAO;
 public class ProductServiceImpl implements ProductService{
 	
 	private ProductDAO productDAO;
-	
+
 	public ProductServiceImpl() {
 		productDAO=new ProductDAO();
 	}

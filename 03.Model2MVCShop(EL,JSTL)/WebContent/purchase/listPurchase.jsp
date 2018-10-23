@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-    <html>
+<html>
 <head>
 <title>구매 목록조회</title>
 
@@ -20,7 +20,7 @@
 
 <div style="width: 98%; margin-left: 10px;">
 
-<form name="detailForm" action="/listUser.do" method="post">
+<form name="detailForm" action="/listPurchase.do?buyerId=${param.buyerId}" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -62,7 +62,7 @@
 		<c:set var="i" value="${ i+1 }" />
 		<tr class="ct_list_pop">
 		<td align="center">
-			<a href="/getPurchase.do?tranNo=${purchase.purchaseProd.prodNo}">${ i }</a>			
+			<a href="/getPurchase.do?tranNo=${purchase.tranNo}">${ i }</a>			
 		</td>
 		<td></td>
 		<td align="left">
@@ -73,10 +73,10 @@
 		<td></td>
 		<td align="left">${purchase.buyer.phone}</td>
 		<td></td>
-		<td align="left">현재
-				
-					배송완료
-				상태 입니다.</td>
+		<td align="left">
+		
+		수정해야돼~~~~~~~~
+		</td>
 		<td></td>
 		<td align="left">
 			

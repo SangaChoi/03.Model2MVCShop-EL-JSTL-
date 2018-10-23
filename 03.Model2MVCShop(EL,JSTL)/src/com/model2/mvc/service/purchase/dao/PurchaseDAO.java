@@ -92,6 +92,50 @@ public class PurchaseDAO {
 		return map;
 	}
 	
+	public Purchase findPurchase(int tranNo) throws Exception{
+		
+		Connection con = DBUtil.getConnection();
+		
+		String sql="SELECT * FROM transaction WHERE tran_no=?";
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setInt(1, tranNo);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		Purchase purchase=null;
+		
+		while(rs.next()) {
+			
+			User user=new User();
+			UserService userUservice=new UserServiceImpl();
+			user=userUservice.getUser(rs.getString("BUYER_ID"));
+			
+			Product product=new Product();
+			ProductService productService=new ProductServiceImpl();
+			product=productService.getProduct(rs.getInt("prod_no"));
+						
+			purchase=new Purchase();
+			purchase.setBuyer(user);
+			purchase.setDivyAddr(rs.getString("demailaddr"));
+			purchase.setDivyDate(rs.getString("dlvy_date"));
+			purchase.setDivyRequest(rs.getString("dlvy_request"));
+			purchase.setOrderDate(rs.getDate("order_date"));
+			purchase.setPaymentOption((rs.getString("payment_option")));
+			purchase.setPurchaseProd(product);
+			purchase.setReceiverName(rs.getString("receiver_name"));
+			purchase.setReceiverPhone(rs.getString("receiver_phone"));
+			purchase.setTranCode(rs.getString("tran_status_code"));
+			purchase.setTranNo(rs.getInt("tran_no"));	
+		}
+		
+		con.close();
+		
+		System.out.println("********"+purchase);
+		
+		return purchase;
+	}
+	
 	private int getTotalCount(String sql) throws Exception {
 		sql = "SELECT COUNT(*) "+
 		          "FROM ( " +sql+ ") countTable";

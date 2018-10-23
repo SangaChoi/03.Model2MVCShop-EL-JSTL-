@@ -47,7 +47,5 @@ public class ActionServlet extends HttpServlet {
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
-		
-		System.out.println("Æ÷¿öµå µÆÀ½!!!!!!!!!!!!!!!!!!");
 	}
 }

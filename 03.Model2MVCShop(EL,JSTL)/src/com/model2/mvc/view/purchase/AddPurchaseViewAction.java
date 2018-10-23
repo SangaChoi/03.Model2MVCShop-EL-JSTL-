@@ -15,9 +15,7 @@ public class AddPurchaseViewAction extends Action{
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		System.out.println("애드 퍼체이스 뷰 액션 execute() 시작");
 		int prodNo=Integer.parseInt(request.getParameter("prodNo"));
-		System.out.println("애드 퍼체이스 뷰 액션 prodNo : "+prodNo);
 		
 		ProductService service=new ProductServiceImpl();		
 		Product product=service.getProduct(prodNo);
