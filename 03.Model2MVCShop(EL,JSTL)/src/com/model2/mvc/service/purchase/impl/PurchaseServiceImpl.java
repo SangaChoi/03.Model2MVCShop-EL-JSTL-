@@ -47,8 +47,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	@Override
 	public void updatePurcahse(Purchase purchase) throws Exception {
-		// TODO Auto-generated method stub
-		
+		purchaseDAO.updatePurchase(purchase);		
 	}
 
 	@Override

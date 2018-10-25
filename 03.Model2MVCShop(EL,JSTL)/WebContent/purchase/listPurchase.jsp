@@ -69,9 +69,9 @@
 			<a href="/getUser.do?userId=${purchase.buyer.userId}">${purchase.buyer.userId}</a>
 		</td>
 		<td></td>
-		<td align="left">${purchase.buyer.userName}</td>
+		<td align="left">${purchase.receiverName}</td>
 		<td></td>
-		<td align="left">${purchase.buyer.phone}</td>
+		<td align="left">${purchase.receiverPhone}</td>
 		<td></td>
 		<td align="left">
 		

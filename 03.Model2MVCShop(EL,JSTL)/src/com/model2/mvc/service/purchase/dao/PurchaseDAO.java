@@ -77,6 +77,8 @@ public class PurchaseDAO {
 			
 			Purchase purchase=new Purchase();
 			purchase.setBuyer(user);
+			purchase.setReceiverName(rs.getString("receiver_name"));
+			purchase.setReceiverPhone(rs.getString("receiver_phone"));
 			purchase.setPurchaseProd(product);
 			purchase.setTranNo(rs.getInt("TRAN_NO"));
 			list.add(purchase);
@@ -131,10 +133,31 @@ public class PurchaseDAO {
 		
 		con.close();
 		
-		System.out.println("********"+purchase);
-		
 		return purchase;
 	}
+	
+	public void updatePurchase(Purchase purchase) throws Exception{
+		
+		Connection con = DBUtil.getConnection();
+		
+		String sql="UPDATE transaction SET payment_option=?, receiver_name=?, "
+				+ "receiver_phone=?, demailaddr=?, dlvy_request=?,"
+				+ "dlvy_date=? WHERE tran_no=?";
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, purchase.getPaymentOption());
+		stmt.setString(2, purchase.getReceiverName());
+		stmt.setString(3, purchase.getReceiverPhone());
+		stmt.setString(4, purchase.getDivyAddr());
+		stmt.setString(5, purchase.getDivyRequest());
+		stmt.setString(6, purchase.getDivyDate());
+		stmt.setInt(7, purchase.getTranNo());
+		stmt.executeUpdate();
+		
+		con.close();
+
+	}
+
 	
 	private int getTotalCount(String sql) throws Exception {
 		sql = "SELECT COUNT(*) "+
@@ -167,5 +190,6 @@ public class PurchaseDAO {
 		
 		return sql;
 	}
+
 
 }

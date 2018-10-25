@@ -76,6 +76,7 @@ public class ProductDAO {
 			product.setPrice(rs.getInt("PRICE"));
 			product.setFileName(rs.getString("IMAGE_FILE"));
 			product.setRegDate(rs.getDate("REG_DATE"));
+			product.setProTranCode(rs.getString("tran_status_code"));
 			list.add(product);
 		}
 		
@@ -118,8 +119,7 @@ public class ProductDAO {
 	}
 	
 	public void updateProduct(Product productVO) throws Exception{
-		
-		System.out.println("************DAO updateProduct() Ω√¿€");
+	
 		Connection con = DBUtil.getConnection();
 		
 		String sql = "update product set prod_name=?, prod_detail=?, MANUFACTURE_DAY=?, PRICE=?, IMAGE_FILE=? where prod_no=?";
@@ -131,10 +131,11 @@ public class ProductDAO {
 		stmt.setInt(4, productVO.getPrice());
 		stmt.setString(5, productVO.getFileName());
 		stmt.setInt(6, productVO.getProdNo());
+		
 		stmt.executeUpdate();
 		
 		con.close();
-		System.out.println("************DAO updateProduct() ≥°");
+		
 	}
 	
 	private int getTotalCount(String sql) throws Exception {
