@@ -76,7 +76,7 @@ public class ProductDAO {
 			product.setPrice(rs.getInt("PRICE"));
 			product.setFileName(rs.getString("IMAGE_FILE"));
 			product.setRegDate(rs.getDate("REG_DATE"));
-			product.setProTranCode(rs.getString("tran_status_code"));
+	
 			list.add(product);
 		}
 		
