@@ -81,7 +81,10 @@ public class PurchaseDAO {
 			purchase.setReceiverPhone(rs.getString("receiver_phone"));
 			purchase.setPurchaseProd(product);
 			purchase.setTranNo(rs.getInt("TRAN_NO"));
+			purchase.setTranCode(rs.getString("tran_status_code"));
 			list.add(purchase);
+			
+			System.out.println(purchase);
 		}
 		
 		map.put("totalCount", new Integer(totalCount));
@@ -133,6 +136,8 @@ public class PurchaseDAO {
 		
 		con.close();
 		
+		System.out.println("퍼체이스DAO find() purchaseVO : "+purchase);
+		
 		return purchase;
 	}
 	
@@ -157,7 +162,6 @@ public class PurchaseDAO {
 		con.close();
 
 	}
-
 	
 	private int getTotalCount(String sql) throws Exception {
 		sql = "SELECT COUNT(*) "+
@@ -190,6 +194,31 @@ public class PurchaseDAO {
 		
 		return sql;
 	}
-
+	
+	public void updateTranCode(Purchase purchase) throws Exception{
+		
+		Connection con = DBUtil.getConnection();
+		
+		if(purchase.getPurchaseProd().getProTranCode().equals("2")) {
+			
+			String sql="UPDATE transaction SET tran_status_code='2'"
+					+ " WHERE prod_no=?";
+		
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, purchase.getPurchaseProd().getProdNo());
+			stmt.executeUpdate();
+					
+		}else if(purchase.getPurchaseProd().getProTranCode().equals("3")) {
+			
+			String sql="UPDATE transaction SET tran_status_code='3'"
+					+ " WHERE tran_no=?";
+			
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, purchase.getTranNo());
+			stmt.executeUpdate();
+		}
+		
+		con.close();
+	}
 
 }

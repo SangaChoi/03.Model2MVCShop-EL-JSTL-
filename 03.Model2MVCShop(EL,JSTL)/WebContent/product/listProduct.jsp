@@ -52,16 +52,7 @@ function fncGetList(currentPage) {
 		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-<%--				<%if(menu.equals("manage")){ %>
-					<td width="93%" class="ct_ttl01">					
-					상품 관리					
-					</td>
-				<%}else if(menu.equals("search")){ %>
-					<td width="93%" class="ct_ttl01">					
-					상품 목록조회					
-					</td>
-				<%} %>	
---%>
+
 				<c:if test="${param.menu=='manage'}">
 					<td width="93%" class="ct_ttl01">					
 					상품 관리					
@@ -179,7 +170,11 @@ function fncGetList(currentPage) {
 				<a href="/updateProductView.do?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a>
 				</c:if>
 				
-				<c:if test="${param.menu=='search'}">
+				<c:if test="${param.menu=='search' && product.proTranCode!='0'}">
+				${product.prodName}
+				</c:if>
+				
+				<c:if test="${param.menu=='search' && product.proTranCode=='0'}">
 				<a href="/getProduct.do?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a>
 				</c:if>
 			</td>	
@@ -190,8 +185,40 @@ function fncGetList(currentPage) {
 			<td></td>
 			<td align="left">
 		
-			수정해야돼~~~
-		
+		<c:choose>
+			<c:when test="${product.proTranCode=='0'}">
+				판매중
+			</c:when>
+			
+			<c:when test="${param.menu=='manage'}">
+				<c:if test="${product.proTranCode=='1  '}">
+					구매완료 <a href="/updateTranCodeByProd.do?prodNo=${product.prodNo}&tranCode=2">배송하기</a>
+				</c:if>
+				<c:if test="${product.proTranCode=='2  '}">
+					배송중
+				</c:if>
+				<c:if test="${product.proTranCode=='3  '}">
+					배송완료
+				</c:if>			
+			</c:when>
+			
+			<c:when test="${param.menu=='search' && user.role=='admin'}">
+				<c:if test="${product.proTranCode=='1  '}">
+					구매완료
+				</c:if>
+				<c:if test="${product.proTranCode=='2  '}">
+					배송중
+				</c:if>
+				<c:if test="${product.proTranCode=='3  '}">
+					배송완료
+				</c:if>	
+			</c:when>
+			
+			<c:otherwise>
+				재고없음
+			</c:otherwise>	
+		</c:choose>
+	
 			</td>	
 		</tr>
 		<tr>
@@ -204,41 +231,6 @@ function fncGetList(currentPage) {
 	<tr>
 		<td align="center">
 		<input type="hidden" id="currentPage" name="currentPage" value=""/>
-<%-- 		
-			<% if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){ %>
-					◀ 이전
-			<% }else{ %>
-					<a href="javascript:fncGetProductList('<%=resultPage.getCurrentPage()-1%>')">◀ 이전</a>
-			<% } %>
-
-			<%	for(int i=resultPage.getBeginUnitPage();i<= resultPage.getEndUnitPage() ;i++){	%>
-					<a href="javascript:fncGetProductList('<%=i %>');"><%=i %></a>
-			<% 	}  %>
-	
-			<% if( resultPage.getEndUnitPage() >= resultPage.getMaxPage() ){ %>
-					이후 ▶
-			<% }else{ %>
-					<a href="javascript:fncGetProductList('<%=resultPage.getEndUnitPage()+1%>')">이후 ▶</a>
-			<% } %>
---%>		
-<%--		<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }">
-			◀ 이전
-			</c:if>
-			<c:if test="${ resultPage.currentPage > resultPage.pageUnit }">
-				<a href="javascript:fncGetProductList('${ resultPage.currentPage-1}')">◀ 이전</a>
-			</c:if>
-	
-			<c:forEach var="i"  begin="${resultPage.beginUnitPage}" end="${resultPage.endUnitPage}" step="1">
-				<a href="javascript:fncGetProductList('${ i }');">${ i }</a>
-			</c:forEach>
-	
-			<c:if test="${ resultPage.endUnitPage >= resultPage.maxPage }">
-			이후 ▶
-			</c:if>
-			<c:if test="${ resultPage.endUnitPage < resultPage.maxPage }">
-				<a href="javascript:fncGetProductList('${resultPage.endUnitPage+1}')">이후 ▶</a>
-			</c:if>
---%>
 
 			<jsp:include page="../common/pageNavigator.jsp"/>	
 			

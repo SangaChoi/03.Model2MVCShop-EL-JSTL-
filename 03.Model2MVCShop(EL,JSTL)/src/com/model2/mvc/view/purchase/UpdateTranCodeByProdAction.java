@@ -10,21 +10,25 @@ import com.model2.mvc.service.domain.*;
 import com.model2.mvc.service.purchase.PurchaseService;
 import com.model2.mvc.service.purchase.impl.PurchaseServiceImpl;
 
-public class AddPurchaseViewAction extends Action{
+public class UpdateTranCodeByProdAction extends Action{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		System.out.println("애드 퍼체이스 뷰 액션 execute() 시작");
 		int prodNo=Integer.parseInt(request.getParameter("prodNo"));
-		System.out.println("애드 퍼체이스 뷰 액션 prodNo : "+prodNo);
+		String tranCode=request.getParameter("tranCode");
 		
-		ProductService service=new ProductServiceImpl();		
-		Product product=service.getProduct(prodNo);
+		Product product=new Product();
+		product.setProdNo(prodNo);
+		product.setProTranCode(tranCode);
 		
-		request.setAttribute("product", product);
+		Purchase purchase=new Purchase();
+		purchase.setPurchaseProd(product);
 		
-		return "forward:/purchase/addPurchaseView.jsp";
+		PurchaseService purchaseService=new PurchaseServiceImpl();
+		purchaseService.updateTranCode(purchase);
+		
+		return "redirect:/listProduct.do?menu=manage";
 	}
 
 }

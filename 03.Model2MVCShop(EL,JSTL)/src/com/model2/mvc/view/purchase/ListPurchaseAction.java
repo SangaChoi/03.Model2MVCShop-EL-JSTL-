@@ -21,6 +21,7 @@ public class ListPurchaseAction extends Action{
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 				
 		String buyerId=request.getParameter("buyerId");
+		
 		Search search=new Search();
 		
 		int currentPage=1;
