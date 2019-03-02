@@ -61,7 +61,7 @@
 	</tr>
 	<tr>
 		<td>¹è¼ÛÈñ¸ÁÀÏÀÚ</td>
-		<td>${purchase.divyDate}</td>
+		<td>${purchase.receiverDate}</td>
 		<td></td>
 	</tr>
 </table>
